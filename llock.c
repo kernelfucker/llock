@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
 #include <ctype.h>
+#include <crypt.h>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
 #include <xcb/xcb_keysyms.h>
@@ -11,12 +13,29 @@
 
 #include "config.h"
 
+/* version 0.2 */
+
 static xcb_connection_t *c;
 static xcb_key_symbols_t *k;
 static xcb_screen_t *s;
 static xcb_window_t w;
 static char in[256] = {0};
 static size_t inlen = 0;
+
+const char* yescrypt_salt(void);
+int verify_passwd(const char *input);
+void hidecur(void);
+void chcolor(uint32_t color);
+void handle(xcb_key_press_event_t *e);
+
+const char* yescrypt_salt(void){
+	return crypt_gensalt("$y$", 0, NULL, 0);
+}
+
+int verify_passwd(const char *input){
+	const char *hashed = crypt(input, passwd);
+	return hashed && strcmp(hashed, passwd) == 0;
+}	
 
 void hidecur(){
 	xcb_pixmap_t pm = xcb_generate_id(c);
@@ -38,7 +57,7 @@ void handle(xcb_key_press_event_t *e){
 	xcb_keysym_t sym = xcb_key_press_lookup_keysym(k, e, 0);
 	chcolor(cactive);
 	if(sym == XK_Return){
-		if(strcmp(in, passwd) == 0){
+			if(verify_passwd(in)){
 			xcb_ungrab_keyboard(c, XCB_CURRENT_TIME);
 			exit(0);
 		}
