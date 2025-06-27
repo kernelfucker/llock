@@ -14,6 +14,6 @@ lethargy: $ lethargy
 mkpasswd: $ mkpasswd --method=yescrypt llock \# replace llock with your own passwd
 
 # usage
-**set passwd in config.h and you can change the colors if you want**
+**set hashed passwd in config.h and you can change the colors if you want**
 
 $ ./llock
