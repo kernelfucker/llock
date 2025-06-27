@@ -10,6 +10,7 @@ use **lethargy** or **mkpasswd** to generate a random hash comptabile with yescr
 i recommend using **lethargy** because it is more minimal))
 
 lethargy: $ lethargy
+
 mkpasswd: $ mkpasswd --method=yescrypt llock \# replace llock with your own passwd
 
 # usage
