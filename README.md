@@ -2,7 +2,7 @@
 logical x display locker
 
 # compile
-$ clang llock.c -o llock -Os -lcrypt -lxcb -lxcb-keysyms
+$ clang llock.c -o llock -Os -lcrypt -lxcb -lxcb-keysyms \# no need -lX11 lflag
 
 # hash passwd with yescrypt
 use **lethargy** or **mkpasswd** to generate a random hash comptabile with yescrypt
