@@ -13,7 +13,7 @@
 
 #include "config.h"
 
-/* version 0.2 */
+#define version "0.2"
 
 static xcb_connection_t *c;
 static xcb_key_symbols_t *k;
@@ -71,7 +71,21 @@ void handle(xcb_key_press_event_t *e){
 	}
 }
 
-int main(){
+int main(int argc, char **argv){
+	if(argc > 1){
+		if(strcmp(argv[1], "-v") == 0){
+			write(1, "lock-" version "\n", sizeof("lock-" version "\n") - 1);
+			return 0;
+		}
+
+		if(strcmp(argv[1], "-h") == 0){
+			write(1, "usage: ", 7);
+			write(1, argv[0], strlen(argv[0]));
+			write(1, " [options]..\n", 14);
+			return 0;
+		}
+	}
+
 	c = xcb_connect(NULL, NULL);
 	k = xcb_key_symbols_alloc(c);
 	s = xcb_setup_roots_iterator(xcb_get_setup(c)).data;
