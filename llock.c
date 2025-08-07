@@ -22,15 +22,10 @@ static xcb_window_t w;
 static char in[256] = {0};
 static size_t inlen = 0;
 
-const char* yescrypt_salt(void);
 int verify_passwd(const char *input);
 void hidecur(void);
 void chcolor(uint32_t color);
 void handle(xcb_key_press_event_t *e);
-
-const char* yescrypt_salt(void){
-	return crypt_gensalt("$y$", 0, NULL, 0);
-}
 
 int verify_passwd(const char *input){
 	const char *hashed = crypt(input, passwd);
