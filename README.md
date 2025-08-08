@@ -7,7 +7,7 @@ $ clang llock.c -o llock -Os -s -lcrypt -lxcb -lxcb-keysyms \# no need -lX11 lfl
 # hash passwd with yescrypt
 use **lethargy** or **mkpasswd** to generate a random hash comptabile with yescrypt
 
-i recommend using **lethargy** because it is more minimal))
+i recommend using **lethargy**
 
 lethargy: $ lethargy
 
